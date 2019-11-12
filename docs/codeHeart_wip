@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+    
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Digiprojekti - kysely</title>
+        <meta name="description" content="kysely">
+        <! <link rel="stylesheet" href="main.css">
+    </head>
+    <body>
+        
+    <div id="lomake">
+        
+        </div>
+        
+    <! -- linkki jqueryn pääkirjastoon -->
+        
+  
+         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js">
+        </script>
+        
+        <script>
+        $(document).ready(function(){
+        
+            $(".kuva").click(function(){
+            $("i").css({'color':'black'})
+            $(this).css({'color':'red'})
+        });
+                          
+      $(".na").click(function(){
+        if (($(this)).is(":checked"))
+        $(this).parent().css({'backgroundColor':'lime'})
+          else
+              $(this).parent().css({'backgroundColor':'yellow'})
+      })})
+        
+        </script>
+        
+        <h3>Valitset haluamasi naamat</h3>
+        <div class="radio" name="naama">
+        <label>
+        <input type="radio" name="naamat" class="na">
+        <i class='far fa-smile kuva'></i>
+        </label>
+        <label class="na">
+        <input type="radio" name="naamat" class="na">
+        <i class='far fa-meh kuva'></i>    
+        </label>
+        <label class="na">
+        <input type="radio" name="naamat" class="na">
+        <i class='far fa-frown kuva'></i>    
+        </label>
+
+        
+       <div class="check" name="naama">
+        <label>
+        <input type="checkbox" name="naamat" class="na">
+            <i class='fa fa-smile kuva'></i>
+            </label>
+            <label class="na">
+            <input type="checkbox" name="naamat" class="na">
+            <i class='far fa-frown'></i>    
+            </label>
+       
+    <! --- oma scripti --> 
+
+      <script>
+           var lomakekentta =[]; //kerätään id-tunnukset tänne
+          
+          $.getJSON("http://ohjelmistopro1.herokuapp.com/kysymys?q=joku%20kysymys", function(data){
+              var items =[]; //taulukko, johon ketätään lomake
+              
+              
+              // jos kaarisulku urlissa niin
+              items.push(data.content+"<br><br><input type=text id="+data.id+">");
+              
+              // jos hakasulku
+            //  $.each(data, function(key,d)){
+            //  items.push(d.teksti);
+              // items.push("<input type=text id="+d.id+"><br>")
+              //  lomakekenttätaulukkoon id-tunnus
+              // lomakekentta.push(d.id);
+                     
+              //       });
+          
+          
+              items.push("<input type=submit onclick=lahetys()><br>")
+              // sivun lomakkeen tulostus
+                $("#lomake").append(items.join(" "));
+              
+              function lahetys(){
+                  for (i = 0; i < lomakekentta.length; i++) {
+                      alert(lomakekentta.length);
+                      alert(document.getElementById(lomakekentta[i]).value);
+                  }
+                  
+              }
+          });
+        
+        </script>  
+      
+    
+        
+        
+    </body>
+</html>
